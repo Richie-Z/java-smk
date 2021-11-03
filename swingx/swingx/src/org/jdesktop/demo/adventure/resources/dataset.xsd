@@ -1,0 +1,85 @@
+<?xml version="1.0" standalone="yes" ?>
+<xs:schema id="adventureDS" targetNamespace="http://jdesktop.org/tempuri/adventureDS.xsd"
+	xmlns="http://jdesktop.org/tempuri/adventureDS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	attributeFormDefault="qualified" elementFormDefault="qualified">
+    <xs:element name="adventureDS">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="package">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="packageid" type="xs:string" />
+                            <xs:element name="catid" type="xs:string" />
+                            <xs:element name="location" type="xs:string" minOccurs="0" />
+                            <xs:element name="price" type="xs:string" minOccurs="0" />
+                            <xs:element name="name" type="xs:string" minOccurs="0" />
+                            <xs:element name="description" type="xs:string" minOccurs="0" />
+                            <xs:element name="imageuri" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="category">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="catid" type="xs:string" />
+                            <xs:element name="name" type="xs:string" minOccurs="0" />
+                            <xs:element name="description" type="xs:string" minOccurs="0" />
+                            <xs:element name="imageuri" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="activity">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="activityid" type="xs:string" />
+                            <xs:element name="location" type="xs:string" minOccurs="0" />
+                            <xs:element name="name" type="xs:string" minOccurs="0" />
+                            <xs:element name="description" type="xs:string" minOccurs="0" />
+                            <xs:element name="price" type="xs:string" minOccurs="0" default="0.00" />
+                            <xs:element name="imageuri" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="activityList">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="packageid" type="xs:string" />
+                            <xs:element name="activityid" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+        <xs:annotation>
+            <xs:appinfo name="packageCategory" type="DataRelation" parentColumn="package.catid" childColumn="category.catid" />
+            <xs:appinfo name="package_activityList" type="DataRelation" parentColumn="package.packageid" childColumn="activityList.packageid" />
+            <xs:appinfo name="activityList_activity" type="DataRelation" parentColumn="activityList.activityid" childColumn="activity.activityid" />
+            <xs:appinfo name="categoryDetail" type="DataRelationTable" relation="packageCategory" parentSelector="package.current" parentTable="" />
+            <xs:appinfo name="activityListRelationTable" type="DataRelationTable" relation="package_activityList" parentSelector="package.current" parentTable="" />
+            <xs:appinfo name="activitiesDetail" type="DataRelationTable" relation="activityList_activity" parentSelector="" parentTable="activityListRelationTable" />
+        </xs:annotation>
+        <!--		
+        <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:authors" />
+            <xs:field xpath="mstns:au_id" />
+        </xs:unique>
+        <xs:unique name="titleauthor_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:titleauthor" />
+            <xs:field xpath="mstns:au_id" />
+            <xs:field xpath="mstns:title_id" />
+        </xs:unique>
+        <xs:unique name="titles_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:titles" />
+            <xs:field xpath="mstns:title_id" />
+        </xs:unique>
+        <xs:keyref name="authorstitleauthor" refer="mstns:Constraint1">
+            <xs:selector xpath=".//mstns:titleauthor" />
+            <xs:field xpath="mstns:au_id" />
+        </xs:keyref>
+        <xs:keyref name="titlestitleauthor" refer="mstns:titles_Constraint1">
+            <xs:selector xpath=".//mstns:titleauthor" />
+            <xs:field xpath="mstns:title_id" />
+        </xs:keyref>
+        -->
+    </xs:element>
+</xs:schema>

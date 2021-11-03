@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>HOW TO: use a chooser</title>
+</head>
+
+<body>
+<h3>Using an Editor Pane to Display Text from a URL</h3>
+</a>
+<blockquote>
+One task that you can accomplish
+without knowing anything about the Swing text system
+is displaying text from a URL.
+Here's the code
+from 
+<a target="_blank" href="example-1dot4/TextSamplerDemo.java"><font color="#bb000f"><code>TextSamplerDemo.java</code></font></a><a target="_blank" href="example-1dot4/TextSamplerDemo.java"><img src="../../images/sourceIcon.gif" width=11 height=11 border=0 align="MIDDLE" alt=" (in a .java source file)"></a> that creates an uneditable editor pane
+that displays text formatted with HTML tags:
+
+<blockquote><pre>
+JEditorPane editorPane = new JEditorPane();
+editorPane.setEditable(false);
+java.net.URL helpURL = TextSamplerDemo.class.getResource(
+                                "TextSamplerDemoHelp.html");
+if (helpURL != null) {
+    try {
+        editorPane.setPage(helpURL);
+    } catch (IOException e) {
+        System.err.println("Attempted to read a bad URL: " + helpURL);
+    }
+} else {
+    System.err.println("Couldn't find file: TextSamplerDemoHelp.html");
+}
+
+//Put the editor pane in a scroll pane.
+JScrollPane editorScrollPane = new JScrollPane(editorPane);
+editorScrollPane.setVerticalScrollBarPolicy(
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+editorScrollPane.setPreferredSize(new Dimension(250, 145));
+editorScrollPane.setMinimumSize(new Dimension(10, 10));
+</pre></blockquote>
+
+The code uses the default constructor to create the
+editor pane, then calls <code>setEditable(false)</code>
+so the user cannot edit the text.
+Next, the code creates the <code>URL</code> object,
+and calls the <code>setPage</code> method with it.
+
+
+<p>
+The <code>setPage</code> method opens the resource
+pointed to by the URL and
+figures out the format of the text
+(which in the example is HTML).
+If the text format is known,
+the editor pane initializes itself
+with the text found at the URL.
+A standard editor pane can understand
+plain text, HTML, and RTF.
+	Note that the page might be loaded asynchronously,
+	which keeps the GUI responsive
+	but means that you shouldn't count on the
+	data being completely loaded
+	after the call to <code>setPage</code> returns.
+
+</blockquote>
+
+
+</body>
+</html>

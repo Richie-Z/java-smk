@@ -1,0 +1,71 @@
+<project name="MyProject" default="compile" basedir=".">
+    <property name="sourcedir" value="${basedir}/src"/>
+    <property name="targetdir" value="${basedir}/build"/>
+    <property name="librarydir" value="${basedir}/lib"/>
+
+    <path id="libraries">
+        <fileset dir="${librarydir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="clean">
+        <delete dir="${targetdir}"/>
+        <mkdir dir="${targetdir}"/>
+    </target>
+
+    <target name="compile" depends="copy-resources">
+      <javac srcdir="${sourcedir}"
+             destdir="${targetdir}"
+             classpathref="libraries"/>
+    </target>
+
+    <target name="copy-resources">
+        <copy todir="${targetdir}">
+            <fileset dir="${sourcedir}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="run" depends="compile">
+        <java classname="org.jdesktop.demo.sample.SimpleJXListDemo" fork="true" classpathref="libraries">
+            <classpath path="${targetdir}"/>
+            <arg value="${action}"/>
+        </java>
+        
+        <java classname="org.jdesktop.demo.sample.SimpleJXTableDemo" fork="true" classpathref="libraries">
+            <classpath path="${targetdir}"/>
+            <arg value="${action}"/>
+        </java>
+
+        <java classname="org.jdesktop.demo.swingx.SwingXDemo" fork="true" classpathref="libraries">
+            <classpath path="${targetdir}"/>
+            <arg value="${action}"/>
+        </java>
+
+        <java classname="org.jdesktop.demo.swingx_dev.SwingXDeveloperDemo" fork="true" classpathref="libraries">
+            <classpath path="${targetdir}"/>
+            <arg value="${action}"/>
+        </java>
+
+        <java classname="org.jdesktop.demo.adventure.AdventureDemo" fork="true" classpathref="libraries">
+            <classpath path="${targetdir}"/>
+            <arg value="${action}"/>
+        </java>
+        <java classname="org.jdesktop.demo.adventure.AdventureDemoEx" fork="true" classpathref="libraries">
+            <classpath path="${targetdir}"/>
+            <arg value="${action}"/>
+        </java>
+        <java classname="org.jdesktop.demo.binding.BindingDemo" fork="true" classpathref="libraries">
+            <classpath path="${targetdir}"/>
+            <arg value="${action}"/>
+        </java>
+        <java classname="org.jdesktop.demo.login.romain.LoginDialog" fork="true" classpathref="libraries">
+            <classpath path="${targetdir}"/>
+            <arg value="${action}"/>
+        </java>
+
+    </target>
+</project>
+
